@@ -1,82 +1,8 @@
 from version import __version__
 import random
+import Colors
 import Sounds as sfx
-
-
-tunic_colors = {
-    "Custom Color":      [0x00, 0x00, 0x00],
-    "Kokiri Green":      [0x1E, 0x69, 0x1B],
-    "Goron Red":         [0x64, 0x14, 0x00],
-    "Zora Blue":         [0x00, 0x3C, 0x64],
-    "Black":             [0x30, 0x30, 0x30],
-    "White":             [0xF0, 0xF0, 0xFF],
-    "Azure Blue":        [0x13, 0x9E, 0xD8],
-    "Vivid Cyan":        [0x13, 0xE9, 0xD8],
-    "Light Red":         [0xF8, 0x7C, 0x6D],
-    "Fuchsia":           [0xFF, 0x00, 0xFF],
-    "Purple":            [0x95, 0x30, 0x80],
-    "Majora Purple":     [0x50, 0x52, 0x9A],
-    "Twitch Purple":     [0x64, 0x41, 0xA5],
-    "Purple Heart":      [0x8A, 0x2B, 0xE2],
-    "Persian Rose":      [0xFF, 0x14, 0x93],
-    "Dirty Yellow":      [0xE0, 0xD8, 0x60],
-    "Blush Pink":        [0xF8, 0x6C, 0xF8],
-    "Hot Pink":          [0xFF, 0x69, 0xB4],
-    "Rose Pink":         [0xFF, 0x90, 0xB3],
-    "Orange":            [0xE0, 0x79, 0x40],
-    "Gray":              [0xA0, 0xA0, 0xB0],
-    "Gold":              [0xD8, 0xB0, 0x60],
-    "Silver":            [0xD0, 0xF0, 0xFF],
-    "Beige":             [0xC0, 0xA0, 0xA0],
-    "Teal":              [0x30, 0xD0, 0xB0],
-    "Blood Red":         [0x83, 0x03, 0x03],
-    "Blood Orange":      [0xFE, 0x4B, 0x03],
-    "Royal Blue":        [0x40, 0x00, 0x90],
-    "Sonic Blue":        [0x50, 0x90, 0xE0],
-    "NES Green":         [0x00, 0xD0, 0x00],
-    "Dark Green":        [0x00, 0x25, 0x18],
-    "Lumen":             [0x50, 0x8C, 0xF0],
-}
-
-
-NaviColors = {
-    "Custom Color":      [0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00],
-    "Gold":              [0xFE, 0xCC, 0x3C, 0xFF, 0xFE, 0xC0, 0x07, 0x00],
-    "White":             [0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0xFF, 0x00],
-    "Green":             [0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00],
-    "Light Blue":        [0x96, 0x96, 0xFF, 0xFF, 0x96, 0x96, 0xFF, 0x00],
-    "Yellow":            [0xFF, 0xFF, 0x00, 0xFF, 0xC8, 0x9B, 0x00, 0x00],
-    "Red":               [0xFF, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00],
-    "Magenta":           [0xFF, 0x00, 0xFF, 0xFF, 0xC8, 0x00, 0x9B, 0x00],
-    "Black":             [0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00],
-    "Tatl":              [0xFF, 0xFF, 0xFF, 0xFF, 0xC8, 0x98, 0x00, 0x00],
-    "Tael":              [0x49, 0x14, 0x6C, 0xFF, 0xFF, 0x00, 0x00, 0x00],
-    "Fi":                [0x2C, 0x9E, 0xC4, 0xFF, 0x2C, 0x19, 0x83, 0x00],
-    "Ciela":             [0xE6, 0xDE, 0x83, 0xFF, 0xC6, 0xBE, 0x5B, 0x00],
-    "Epona":             [0xD1, 0x49, 0x02, 0xFF, 0x55, 0x1F, 0x08, 0x00],
-    "Ezlo":              [0x62, 0x9C, 0x5F, 0xFF, 0x3F, 0x5D, 0x37, 0x00],
-    "King of Red Lions": [0xA8, 0x33, 0x17, 0xFF, 0xDE, 0xD7, 0xC5, 0x00],
-    "Linebeck":          [0x03, 0x26, 0x60, 0xFF, 0xEF, 0xFF, 0xFF, 0x00],
-    "Loftwing":          [0xD6, 0x2E, 0x31, 0xFF, 0xFD, 0xE6, 0xCC, 0x00],
-    "Midna":             [0x19, 0x24, 0x26, 0xFF, 0xD2, 0x83, 0x30, 0x00],
-    "Phantom Zelda":     [0x97, 0x7A, 0x6C, 0xFF, 0x6F, 0x46, 0x67, 0x00],
-}
-
-
-def get_tunic_colors():
-    return list(tunic_colors.keys())
-
-
-def get_tunic_color_options():
-    return ["Random Choice", "Completely Random"] + get_tunic_colors()
-
-
-def get_navi_colors():
-    return list(NaviColors.keys())
-
-
-def get_navi_color_options():
-    return ["Random Choice", "Completely Random"] + get_navi_colors()
+from Utils import keywdify
 
 
 def patch_cosmetics(settings, rom):
@@ -100,68 +26,46 @@ def patch_cosmetics(settings, rom):
     else:
         restore_music(rom)
 
-    # patch tunic colors
-    tunics = [
-        ('Kokiri Tunic', settings.kokiri_color, 0x00B6DA38),
-        ('Goron Tunic', settings.goron_color,  0x00B6DA3B),
-        ('Zora Tunic', settings.zora_color,   0x00B6DA3E),
+    # Configurable Colors
+    rgb_config = [
+          (settings.color_tunic_kokiri, Colors.RGB_Setting.TUNIC_KOKIRI),
+          (settings.color_tunic_goron,  Colors.RGB_Setting.TUNIC_GORON),
+          (settings.color_tunic_zora,   Colors.RGB_Setting.TUNIC_ZORA),
+          (settings.color_navi_idle,    Colors.RGB_Setting.NAVI_IDLE),
+          (settings.color_navi_npc,     Colors.RGB_Setting.NAVI_NPC),
+          (settings.color_navi_enemy,   Colors.RGB_Setting.NAVI_ENEMY),
+          (settings.color_navi_prop,    Colors.RGB_Setting.NAVI_PROP),
     ]
-    tunic_color_list = get_tunic_colors()
 
-    for tunic, tunic_option, address in tunics:
-        # handle random
-        if tunic_option == 'Random Choice':
-            tunic_option = random.choice(tunic_color_list)
-        # handle completely random
-        if tunic_option == 'Completely Random':
-            color = [random.getrandbits(8), random.getrandbits(8), random.getrandbits(8)]
-        # grab the color from the list
-        elif tunic_option in tunic_colors:
-            color = tunic_colors[tunic_option]
-        # build color from hex code
+    # Evaluate the user's selection and patch all hooks accordingly
+    for selection, setting in rgb_config:
+        if selection == 'default':
+            for hook_list in setting.hook_lists:
+                for hook in hook_list:
+                    rgb_bytes = rom.original[hook:hook+3]
+                    rom.write_bytes(hook, rgb_bytes)
+        elif selection == 'custom':
+            raise ValueError("Sorry, immediate custom colors are not handled in this version.")
+        elif selection == 'completely_random':
+            for hook_list in setting.hook_lists:
+                rgb_bytes = [random.getrandbits(8), random.getrandbits(8), random.getrandbits(8)]
+                for hook in hook_list:
+                    rom.write_bytes(hook, rgb_bytes)
+        elif selection in setting.random_pools:
+            poolname = setting.random_pools[selection].lstrip('Random ')
+            rc = random.choice(setting.origin['pools'][poolname])
+            for i, hook_list in enumerate(setting.hook_lists):
+                rgb_bytes = Colors.bytes_from_hexcode(str(rc[1][i]))
+                for hook in hook_list:
+                    rom.write_bytes(hook, rgb_bytes)
+        elif selection in setting.pool_choices:
+            for i, hook_list in enumerate(setting.hook_lists):
+                hexcode = setting.patch_dict[keywdify(setting.pool_choices[selection])][i]
+                rgb_bytes = Colors.bytes_from_hexcode(hexcode)
+                for hook in hook_list:
+                    rom.write_bytes(hook, rgb_bytes)
         else:
-            color = list(int(tunic_option[i:i+2], 16) for i in (0, 2 ,4))
-            tunic_option = 'Custom'
-        rom.write_bytes(address, color)
-        log.tunic_colors[tunic] = dict(option=tunic_option, color=''.join(['{:02X}'.format(c) for c in color]))
-
-    # patch navi colors
-    navi = [
-        ('Navi Idle', settings.navi_color_default, [0x00B5E184]), # Default
-        ('Navi Targeting Enemy', settings.navi_color_enemy,   [0x00B5E19C, 0x00B5E1BC]), # Enemy, Boss
-        ('Navi Targeting NPC', settings.navi_color_npc,     [0x00B5E194]), # NPC
-        ('Navi Targeting Prop', settings.navi_color_prop,    [0x00B5E174, 0x00B5E17C, 0x00B5E18C,
-                                  0x00B5E1A4, 0x00B5E1AC, 0x00B5E1B4,
-                                  0x00B5E1C4, 0x00B5E1CC, 0x00B5E1D4]), # Everything else
-    ]
-    navi_color_list = get_navi_colors()
-
-    for navi_action, navi_option, navi_addresses in navi:
-        # choose a random choice for the whole group
-        if navi_option == 'Random Choice':
-            navi_option = random.choice(navi_color_list)
-        custom_color = False
-        for address in navi_addresses:
-            # completely random is random for every subgroup
-            if navi_option == 'Completely Random':
-                color = [random.getrandbits(8), random.getrandbits(8), random.getrandbits(8), 0xFF,
-                         random.getrandbits(8), random.getrandbits(8), random.getrandbits(8), 0x00]
-                if navi_action not in log.navi_colors:
-                    log.navi_colors[navi_action] = list()
-                log.navi_colors[navi_action].append(dict(option=navi_option, color1=''.join(['{:02X}'.format(c) for c in color[0:3]]), color2=''.join(['{:02X}'.format(c) for c in color[4:7]])))
-            # grab the color from the list
-            elif navi_option in NaviColors:
-                color = NaviColors[navi_option]
-            # build color from hex code
-            else:
-                color = list(int(navi_option[i:i+2], 16) for i in (0, 2 ,4))
-                color = color + [0xFF] + color + [0x00]
-                custom_color = True
-            rom.write_bytes(address, color)
-        if custom_color:
-            navi_option = 'Custom'
-        if navi_action not in log.navi_colors:
-            log.navi_colors[navi_action] = [dict(option=navi_option, color1=''.join(['{:02X}'.format(c) for c in color[0:3]]), color2=''.join(['{:02X}'.format(c) for c in color[4:7]]))]
+            raise ValueError("This value is unhandled as a color: ", selection)
 
     # Configurable Sound Effects
     sfx_config = [

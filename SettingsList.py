@@ -1,8 +1,8 @@
 import argparse
 import re
 import math
-from Cosmetics import get_tunic_color_options, get_navi_color_options
 from LocationList import location_table
+import Colors
 import Sounds as sfx
 
 # holds the info for a single setting
@@ -144,22 +144,6 @@ class Scale(Setting_Widget):
         super().__init__(name, type, choices, default, args_params, gui_params,
                 shared)
 
-
-def parse_custom_tunic_color(s):
-    return parse_color(s, get_tunic_color_options())
-
-def parse_custom_navi_color(s):
-    return parse_color(s, get_navi_color_options())
-
-def parse_color(s, color_choices):
-    if s == 'Custom Color':
-        raise argparse.ArgumentTypeError('Specify custom color by using \'Custom (#xxxxxx)\'')
-    elif re.match(r'^Custom \(#[A-Fa-f0-9]{6}\)$', s):
-        return re.findall(r'[A-Fa-f0-9]{6}', s)[0]
-    elif s in color_choices:
-        return s
-    else:
-        raise argparse.ArgumentTypeError('Invalid color specified')
 
 def logic_tricks_entry_tooltip(widget, pos):
     val = widget.get()
@@ -1753,175 +1737,153 @@ setting_infos = [
                               randomized.
                              ''',
             ),
-
-    Setting_Info('kokiri_color', str, 0, False,
-        {
-            'default': 'Kokiri Green',
-            'type': parse_custom_tunic_color,
-            'help': '''\
-                    Choose the color for Link's Kokiri Tunic. (default: %(default)s)
-                    Color:              Make the Kokiri Tunic this color.
-                    Random Choice:      Choose a random color from this list of colors.
-                    Completely Random: Choose a random color from any color the N64 can draw.
-                    '''
-        },
-        {
-            'text': 'Kokiri Tunic',
-            'group': 'colors',
-            'widget': 'Combobox',
-            'default': 'Kokiri Green',
-            'options': get_tunic_color_options(),
-            'tooltip':'''\
-                      'Random Choice': Choose a random
-                      color from this list of colors.
-                      'Completely Random': Choose a random
-                      color from any color the N64 can draw.
-                      '''
-        }),
-    Setting_Info('goron_color', str, 0, False,
-        {
-            'default': 'Goron Red',
-            'type': parse_custom_tunic_color,
-            'help': '''\
-                    Choose the color for Link's Goron Tunic. (default: %(default)s)
-                    Color:              Make the Goron Tunic this color.
-                    Random Choice:      Choose a random color from this list of colors.
-                    Completely Random: Choose a random color from any color the N64 can draw.
-                    '''
-        },
-        {
-            'text': 'Goron Tunic',
-            'group': 'colors',
-            'widget': 'Combobox',
-            'default': 'Goron Red',
-            'options': get_tunic_color_options(),
-            'tooltip':'''\
-                      'Random Choice': Choose a random
-                      color from this list of colors.
-                      'Completely Random': Choose a random
-                      color from any color the N64 can draw.
-                      '''
-        }),
-    Setting_Info('zora_color', str, 0, False,
-        {
-            'default': 'Zora Blue',
-            'type': parse_custom_tunic_color,
-            'help': '''\
-                    Choose the color for Link's Zora Tunic. (default: %(default)s)
-                    Color:              Make the Zora Tunic this color.
-                    Random Choice:      Choose a random color from this list of colors.
-                    Completely Random: Choose a random color from any color the N64 can draw.
-                    '''
-        },
-        {
-            'text': 'Zora Tunic',
-            'group': 'colors',
-            'widget': 'Combobox',
-            'default': 'Zora Blue',
-            'options': get_tunic_color_options(),
-            'tooltip':'''\
-                      'Random Choice': Choose a random
-                      color from this list of colors.
-                      'Completely Random': Choose a random
-                      color from any color the N64 can draw.
-                      '''
-        }),
-    Setting_Info('navi_color_default', str, 0, False,
-        {
-            'default': 'White',
-            'type': parse_custom_navi_color,
-            'help': '''\
-                    Choose the color for Navi when she is idle. (default: %(default)s)
-                    Color:             Make the Navi this color.
-                    Random Choice:     Choose a random color from this list of colors.
-                    Completely Random: Choose a random color from any color the N64 can draw.
-                    '''
-        },
-        {
-            'text': 'Navi Idle',
-            'group': 'colors',
-            'widget': 'Combobox',
-            'default': 'White',
-            'options': get_navi_color_options(),
-            'tooltip':'''\
-                      'Random Choice': Choose a random
-                      color from this list of colors.
-                      'Completely Random': Choose a random
-                      color from any color the N64 can draw.
-                      '''
-        }),
-    Setting_Info('navi_color_enemy', str, 0, False,
-        {
-            'default': 'Yellow',
-            'type': parse_custom_navi_color,
-            'help': '''\
-                    Choose the color for Navi when she is targeting an enemy. (default: %(default)s)
-                    Color:             Make the Navi this color.
-                    Random Choice:     Choose a random color from this list of colors.
-                    Completely Random: Choose a random color from any color the N64 can draw.
-                    '''
-        },
-        {
-            'text': 'Navi Targeting Enemy',
-            'group': 'colors',
-            'widget': 'Combobox',
-            'default': 'Yellow',
-            'options': get_navi_color_options(),
-            'tooltip':'''\
-                      'Random Choice': Choose a random
-                      color from this list of colors.
-                      'Completely Random': Choose a random
-                      color from any color the N64 can draw.
-                      '''
-        }),
-    Setting_Info('navi_color_npc', str, 0, False,
-        {
-            'default': 'Light Blue',
-            'type': parse_custom_navi_color,
-            'help': '''\
-                    Choose the color for Navi when she is targeting an NPC. (default: %(default)s)
-                    Color:             Make the Navi this color.
-                    Random Choice:     Choose a random color from this list of colors.
-                    Completely Random: Choose a random color from any color the N64 can draw.
-                    '''
-        },
-        {
-            'text': 'Navi Targeting NPC',
-            'group': 'colors',
-            'widget': 'Combobox',
-            'default': 'Light Blue',
-            'options': get_navi_color_options(),
-            'tooltip':'''\
-                      'Random Choice': Choose a random
-                      color from this list of colors.
-                      'Completely Random': Choose a random
-                      color from any color the N64 can draw.
-                      '''
-        }),
-    Setting_Info('navi_color_prop', str, 0, False,
-        {
-            'default': 'Green',
-            'type': parse_custom_navi_color,
-            'help': '''\
-                    Choose the color for Navi when she is targeting a prop. (default: %(default)s)
-                    Color:             Make the Navi this color.
-                    Random Choice:     Choose a random color from this list of colors.
-                    Completely Random: Choose a random color from any color the N64 can draw.
-                    '''
-        },
-        {
-            'text': 'Navi Targeting Prop',
-            'group': 'colors',
-            'widget': 'Combobox',
-            'default': 'Green',
-            'options': get_navi_color_options(),
-            'tooltip':'''\
-                      'Random Choice': Choose a random
-                      color from this list of colors.
-                      'Completely Random': Choose a random
-                      color from any color the N64 can draw.
-                      '''
-        }),
+    Combobox(
+            name           = Colors.RGB_Setting.TUNIC_KOKIRI.keyword,
+            default        = 'default',
+            choices        = Colors.RGB_Setting.TUNIC_KOKIRI.choices,
+            args_help      = '''\
+                             Choose the color for Link's Kokiri Tunic.
+                             Default:            Set the color to its original value
+                             Completely Random:  Choose a random color from any color the N64 can draw.
+                             Random Choice:      Choose a random color from this list of colors.
+                             Color:              Make the Kokiri Tunic this color.
+                             ''',
+            #'type': parse_custom_tunic_color
+            gui_text       = Colors.RGB_Setting.TUNIC_KOKIRI.label,
+            gui_group      = 'colors',
+            gui_tooltip    = '''\
+                             'Random Choice': Choose a random
+                             color from this list of colors.
+                             'Completely Random': Choose a random
+                             color from any color the N64 can draw.
+                             ''',
+            ),
+    Combobox(
+            name           = Colors.RGB_Setting.TUNIC_GORON.keyword,
+            default        = 'default',
+            choices        = Colors.RGB_Setting.TUNIC_GORON.choices,
+            args_help      = '''\
+                             Choose the color for Link's Goron Tunic.
+                             Default:            Set the color to its original value
+                             Completely Random:  Choose a random color from any color the N64 can draw.
+                             Random Choice:      Choose a random color from this list of colors.
+                             Color:              Make the Goron Tunic this color.
+                             ''',
+            #'type': parse_custom_tunic_color,
+            gui_text       = Colors.RGB_Setting.TUNIC_GORON.label,
+            gui_group      = 'colors',
+            gui_tooltip    = '''\
+                             'Random Choice': Choose a random
+                             color from this list of colors.
+                             'Completely Random': Choose a random
+                             color from any color the N64 can draw.
+                             ''',
+            ),
+    Combobox(
+            name           = Colors.RGB_Setting.TUNIC_ZORA.keyword,
+            default        = 'default',
+            choices        = Colors.RGB_Setting.TUNIC_ZORA.choices,
+            args_help      = '''\
+                             Choose the color for Link's Zora Tunic.
+                             Default:            Set the color to its original value
+                             Completely Random:  Choose a random color from any color the N64 can draw.
+                             Random Choice:      Choose a random color from this list of colors.
+                             Color:              Make the Zora Tunic this color.
+                             ''',
+            #'type': parse_custom_tunic_color,
+            gui_text       = Colors.RGB_Setting.TUNIC_ZORA.label,
+            gui_group      = 'colors',
+            gui_tooltip    = '''\
+                             'Random Choice': Choose a random
+                             color from this list of colors.
+                             'Completely Random': Choose a random
+                             color from any color the N64 can draw.
+                             ''',
+            ),
+    Combobox(
+            name           = Colors.RGB_Setting.NAVI_IDLE.keyword,
+            default        = 'default',
+            choices        = Colors.RGB_Setting.NAVI_IDLE.choices,
+            args_help      = '''\
+                             Choose the color for Navi when she is idle.
+                             Default:           Set the color to its original value
+                             Completely Random: Choose a random color from any color the N64 can draw.
+                             Random Choice:     Choose a random color from this list of colors.
+                             Color:             Make the Navi this color.
+                             ''',
+            #'type': parse_custom_navi_color,
+            gui_text       = Colors.RGB_Setting.NAVI_IDLE.label,
+            gui_group      = 'colors',
+            gui_tooltip    = '''\
+                             'Random Choice': Choose a random
+                             color from this list of colors.
+                             'Completely Random': Choose a random
+                             color from any color the N64 can draw.
+                             ''',
+            ),
+    Combobox(
+            name           = Colors.RGB_Setting.NAVI_NPC.keyword,
+            default        = 'default',
+            choices        = Colors.RGB_Setting.NAVI_NPC.choices,
+            args_help      = '''\
+                             Choose the color for Navi when she is targeting an NPC.
+                             Default:           Set the color to its original value
+                             Completely Random: Choose a random color from any color the N64 can draw.
+                             Random Choice:     Choose a random color from this list of colors.
+                             Color:             Make the Navi this color.
+                             ''',
+            #'type': parse_custom_navi_color,
+            gui_text       = Colors.RGB_Setting.NAVI_NPC.label,
+            gui_group      = 'colors',
+            gui_tooltip    = '''\
+                             'Random Choice': Choose a random
+                             color from this list of colors.
+                             'Completely Random': Choose a random
+                             color from any color the N64 can draw.
+                             ''',
+            ),
+    Combobox(
+            name           = Colors.RGB_Setting.NAVI_ENEMY.keyword,
+            default        = 'default',
+            choices        = Colors.RGB_Setting.NAVI_ENEMY.choices,
+            args_help      = '''\
+                             Choose the color for Navi when she is targeting an enemy.
+                             Default:           Set the color to its original value
+                             Completely Random: Choose a random color from any color the N64 can draw.
+                             Random Choice:     Choose a random color from this list of colors.
+                             Color:             Make the Navi this color.
+                             ''',
+            #'type': parse_custom_navi_color,
+            gui_text       = Colors.RGB_Setting.NAVI_ENEMY.label,
+            gui_group      = 'colors',
+            gui_tooltip    = '''\
+                             'Random Choice': Choose a random
+                             color from this list of colors.
+                             'Completely Random': Choose a random
+                             color from any color the N64 can draw.
+                             ''',
+            ),
+    Combobox(
+            name           = Colors.RGB_Setting.NAVI_PROP.keyword,
+            default        = 'default',
+            choices        = Colors.RGB_Setting.NAVI_PROP.choices,
+            args_help      = '''\
+                             Choose the color for Navi when she is targeting a prop.
+                             Default:           Set the color to its original value
+                             Completely Random: Choose a random color from any color the N64 can draw.
+                             Random Choice:     Choose a random color from this list of colors.
+                             Color:             Make the Navi this color.
+                             ''',
+            #'type': parse_custom_navi_color,
+            gui_text       = Colors.RGB_Setting.NAVI_PROP.label,
+            gui_group      = 'colors',
+            gui_tooltip    = '''\
+                             'Random Choice': Choose a random
+                             color from this list of colors.
+                             'Completely Random': Choose a random
+                             color from any color the N64 can draw.
+                             ''',
+            ),
     Combobox(
             name           = 'sfx_nightfall',
             default        = 'default',

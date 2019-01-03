@@ -9,6 +9,7 @@ import random
 import itertools
 import bisect
 import logging
+import yaml
 
 def is_bundled():
     return getattr(sys, 'frozen', False)
@@ -162,3 +163,14 @@ def check_python_version():
     python_version = '.'.join([str(num) for num in sys.version_info[0:3]])
     if compare_version(python_version, '3.6.0') < 0:
         raise Exception('Randomizer requires at least version 3.6 and you are using %s' % python_version)
+
+
+def object_from_yaml(filepath):
+    result = {}
+    with open(filepath, 'r') as stream:
+        result = yaml.safe_load(stream)
+    return result
+
+
+def keywdify(s: str):
+    return s.lower().replace(' ', '_')

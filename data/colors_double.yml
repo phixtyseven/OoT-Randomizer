@@ -1,0 +1,36 @@
+pools:
+        Navi:                           # inner      outer
+                - ["Gold",              ['#FECC3C', '#FEC007']]
+                - ["White",             ['#FFFFFF', '#0000FF']]
+                - ["Green",             ['#00FF00', '#00FF00']]
+                - ["Light Blue",        ['#9696FF', '#9696FF']]
+                - ["Yellow",            ['#FFFF00', '#C89B00']]
+                - ["Red",               ['#FF0000', '#FF0000']]
+                - ["Magenta",           ['#FF00FF', '#C8009B']]
+                - ["Black",             ['#000000', '#000000']]
+                - ["Tatl",              ['#FFFFFF', '#C89800']]
+                - ["Tael",              ['#49146C', '#FF0000']]
+                - ["Fi",                ['#2C9EC4', '#2C1983']]
+                - ["Ciela",             ['#E6DE83', '#C6BE5B']]
+                - ["Epona",             ['#D14902', '#551F08']]
+                - ["Ezlo",              ['#629C5F', '#3F5D37']]
+                - ["King of Red Lions", ['#A83317', '#DED7C5']]
+                - ["Linebeck",          ['#032660', '#EFFFFF']]
+                - ["Loftwing",          ['#D62E31', '#FDE6CC']]
+                - ["Midna",             ['#192426', '#D28330']]
+                - ["Phantom Zelda",     ['#977A6C', '#6F4667']]
+                - ["Sun",               ['#FFAA00', '#FFAA00']]
+
+        Pastels:
+                - ["Pastel Red",        ['#FEA3AA', '#FEA3AA']]
+                - ["Pastel Orange",     ['#F8B88B', '#F8B88B']]
+                - ["Pastel Yellow",     ['#FAF884', '#FAF884']]
+                - ["Pastel Green",      ['#BAED91', '#BAED91']]
+                - ["Pastel Blue",       ['#B2CEFE', '#B2CEFE']]
+                - ["Pastel Violet",     ['#F2A2E8', '#F2A2E8']]
+
+settings: # Individual choices come from first pool in list
+        color_navi_idle:                ['Navi', 'Pastels']
+        color_navi_npc:                 ['Navi', 'Pastels']
+        color_navi_enemy:               ['Navi', 'Pastels']
+        color_navi_prop:                ['Navi', 'Pastels']
