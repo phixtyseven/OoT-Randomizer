@@ -672,20 +672,30 @@ def move_shop_item_messages(messages, shop_items):
         if is_in_item_range(shop.purchase_message):
             shop.purchase_message |= 0x8000
 
-def make_player_message(text):
+def update_for_single(text):
+    string_mapping = {
+        "You[expl]": "You",
+        "you[expl]": "you",
+    }
+
+    new_text = text
+    for search, replacement in string_mapping.items():
+        if search in text:
+            new_text = new_text.replace(search, replacement)
+    return new_text
+
+def update_for_multi(text):
     player_text = '\x05\x42\x0F\x05\x40'
     pronoun_mapping = {
         "You have ": player_text + " ",
         "You've ":   player_text + " ",
         "Your ":     player_text + "'s ",
         "You ":      player_text + " ",
-        "You[expl]":               "You",
 
         "you have ": player_text + " ",
         "you've ":   player_text + " ",
         "your ":     player_text + "'s ",
         "you ":      player_text + " ",
-        "you[expl]":               "you",
     }
 
     verb_mapping = {
@@ -702,7 +712,7 @@ def make_player_message(text):
             new_text = new_text.replace(search, replacement)
     for search, replacement in verb_mapping.items():
         new_text = new_text.replace(search, replacement)
-    return new_text
+    return update_for_single(new_text)
 
 
 # reduce item message sizes and add new item messages
@@ -712,9 +722,9 @@ def update_item_messages(messages, world):
     new_item_messages.update(KEYSANITY_MESSAGES)
     for id, text in new_item_messages.items():
         if world.world_count > 1:
-            update_message_by_id(messages, id, make_player_message(text), 0x23)
+            update_message_by_id(messages, id, update_for_multi(text), 0x23)
         else:
-            update_message_by_id(messages, id, text, 0x23)
+            update_message_by_id(messages, id, update_for_single(text), 0x23)
 
 
 # run all keysanity related patching to add messages for dungeon specific items

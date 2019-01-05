@@ -10,7 +10,7 @@ from Hints import writeGossipStoneHints, buildBossRewardHints, \
         buildGanonText, getSimpleHintNoPrefix
 from Utils import data_path
 from Messages import read_messages, update_message_by_id, read_shop_items, \
-        write_shop_items, remove_unused_messages, make_player_message, \
+        write_shop_items, remove_unused_messages, update_for_multi, \
         add_item_messages, repack_messages, shuffle_messages
 from OcarinaSongs import replace_songs
 from MQ import patch_files, File, update_dmadata, insert_space, add_relocations
@@ -1358,7 +1358,7 @@ def patch_rom(spoiler:Spoiler, world:World, rom:LocalRom):
     rom.write_int16(0xB6EC52, 999)
     tycoon_message = "\x08\x13\x57You got a \x05\x43Tycoon's Wallet\x05\x40!\x01Now you can hold\x01up to \x05\x46999\x05\x40 \x05\x46Rupees\x05\x40."
     if world.world_count > 1:
-       tycoon_message = make_player_message(tycoon_message)
+       tycoon_message = update_for_multi(tycoon_message)
     update_message_by_id(messages, 0x00F8, tycoon_message, 0x23)
 
     repack_messages(rom, messages)
