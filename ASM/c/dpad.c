@@ -25,20 +25,22 @@ void handle_dpad() {
     pad_pressed = 0;
     pad_pressed |= pad_pressed_raw;
 
-    if (CAN_USE_DPAD && z64_file.link_age == 0) {
-        if (pad_pressed & DPAD_L && z64_file.iron_boots) {
-            if (z64_file.equip_boots == 2) z64_file.equip_boots = 1;
-            else z64_file.equip_boots = 2;
-            z64_UpdateEquipment(&z64_game, &z64_link);
-            z64_playsfx(0x835, (z64_xyzf_t*)0x80104394, 0x04, (float*)0x801043A0, (float*)0x801043A0, (float*)0x801043A8);
-        }
+    if (CAN_USE_DPAD) {
+	if (z64_file.link_age == 0) {
+            if (pad_pressed & DPAD_L && z64_file.iron_boots) {
+                if (z64_file.equip_boots == 2) z64_file.equip_boots = 1;
+                else z64_file.equip_boots = 2;
+                z64_UpdateEquipment(&z64_game, &z64_link);
+                z64_playsfx(0x835, (z64_xyzf_t*)0x80104394, 0x04, (float*)0x801043A0, (float*)0x801043A0, (float*)0x801043A8);
+            }
 
-        if ((pad_pressed & DPAD_R) && z64_file.hover_boots) {
-            if (z64_file.equip_boots == 3) z64_file.equip_boots = 1;
-            else z64_file.equip_boots = 3;
-            z64_UpdateEquipment(&z64_game, &z64_link);
-            z64_playsfx(0x835, (z64_xyzf_t*)0x80104394, 0x04, (float*)0x801043A0, (float*)0x801043A0, (float*)0x801043A8);
-        }
+            if ((pad_pressed & DPAD_R) && z64_file.hover_boots) {
+                if (z64_file.equip_boots == 3) z64_file.equip_boots = 1;
+                else z64_file.equip_boots = 3;
+                z64_UpdateEquipment(&z64_game, &z64_link);
+                z64_playsfx(0x835, (z64_xyzf_t*)0x80104394, 0x04, (float*)0x801043A0, (float*)0x801043A0, (float*)0x801043A8);
+            }
+	}
     
         if (pad_pressed & DPAD_D) {
             if(!z64_game.restriction_flags.ocarina)
