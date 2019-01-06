@@ -8,6 +8,7 @@
 #include "dpad.h"
 #include "z64.h"
 #include "chests.h"
+#include "rainbow_sword.h"
 
 void c_init() {
     heap_init();
