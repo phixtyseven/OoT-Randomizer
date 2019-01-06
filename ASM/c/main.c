@@ -21,6 +21,7 @@ void c_init() {
 void before_game_state_update() {
     handle_pending_items();
     handle_dpad();
+    update_color();
 }
 
 void after_game_state_update() {

@@ -1,7 +1,7 @@
 import argparse
 import re
 import math
-from Cosmetics import get_tunic_color_options, get_navi_color_options
+from Cosmetics import get_tunic_color_options, get_navi_color_options, get_sword_color_options
 from LocationList import location_table
 import Sounds as sfx
 
@@ -150,6 +150,9 @@ def parse_custom_tunic_color(s):
 
 def parse_custom_navi_color(s):
     return parse_color(s, get_navi_color_options())
+
+def parse_custom_sword_color(s):
+    return parse_color(s, get_sword_color_options())
 
 def parse_color(s, color_choices):
     if s == 'Custom Color':
@@ -1745,7 +1748,7 @@ setting_infos = [
                              random:      Areas play random background music
                              ''',
             gui_text       = 'Background Music',
-            gui_group      = 'cosmetic',
+            gui_group      = 'audio',
             gui_tooltip    = '''\
                               'No Music': No background music.
                               is played.
@@ -1922,6 +1925,135 @@ setting_infos = [
                       'Completely Random': Choose a random
                       color from any color the N64 can draw.
                       '''
+        }),
+    Scale(
+            name           = 'sword_trail_duration',
+            default        = 4,
+            min            = 4,
+            max            = 20, # seems rather long
+            step           = 2,
+            args_help      = '''\
+                             Select the duration of the sword trail
+                             ''',
+            gui_text       = 'Sword Trail Duration',
+            gui_group      = 'cosmetic',
+            gui_tooltip    = '''\
+                             Select the duration for sword trails.
+                             The higher the number, the longer it lasts.
+                             Default: 4
+                             '''
+            ),
+    Checkbutton(
+            name           = 'rainbow_sword_trail',
+            args_help      = '''\
+                             Enables rainbow sword trails
+                             ''',
+            gui_text       = 'Rainbow Sword Trail',
+            gui_group      = 'cosmetic',
+            gui_tooltip    = '''\
+                             Enables rainbow sword trails, which
+                             show whenever you swing your sword.
+                             ''',
+            ),
+    Setting_Info('sword_trail_color_inner1', str, 0, False,
+        {
+            'default': 'White',
+            'type': parse_custom_sword_color,
+            'help': '''\
+                    Choose the color for your sword trail when you swing. This controls the inner initial color. (default: %(default)s)
+                    Color:             Make your sword trail this color.
+                    Random Choice:     Choose a random color from this list of colors.
+                    Completely Random: Choose a random color from any color the N64 can draw.
+                    '''
+        },
+        {
+            'text': 'Sword Trail Inner Initial',
+            'group': 'colors',
+            'widget': 'Combobox',
+            'default': 'White',
+            'options': get_sword_color_options(),
+            'tooltip':'''\
+                      'Random Choice': Choose a random
+                      color from this list of colors.
+                      'Completely Random': Choose a random
+                      color from any color the N64 can draw.
+                      ''',
+            'dependency': lambda settings: False if settings.rainbow_sword_trail else None,
+        }),
+    Setting_Info('sword_trail_color_outer1', str, 0, False,
+        {
+            'default': 'White',
+            'type': parse_custom_sword_color,
+            'help': '''\
+                    Choose the color for your sword trail when you swing. This controls the outer initial color. (default: %(default)s)
+                    Color:             Make your sword trail this color.
+                    Random Choice:     Choose a random color from this list of colors.
+                    Completely Random: Choose a random color from any color the N64 can draw.
+                    '''
+        },
+        {
+            'text': 'Sword Trail Outer Initial',
+            'group': 'colors',
+            'widget': 'Combobox',
+            'default': 'White',
+            'options': get_sword_color_options(),
+            'tooltip':'''\
+                      'Random Choice': Choose a random
+                      color from this list of colors.
+                      'Completely Random': Choose a random
+                      color from any color the N64 can draw.
+                      ''',
+            'dependency': lambda settings: False if settings.rainbow_sword_trail else None,
+        }),
+    Setting_Info('sword_trail_color_inner2', str, 0, False,
+        {
+            'default': 'White',
+            'type': parse_custom_sword_color,
+            'help': '''\
+                    Choose the color for your sword trail when you swing. This controls the inner fade color. (default: %(default)s)
+                    Color:             Make your sword trail this color.
+                    Random Choice:     Choose a random color from this list of colors.
+                    Completely Random: Choose a random color from any color the N64 can draw.
+                    '''
+        },
+        {
+            'text': 'Sword Trail Inner Fade',
+            'group': 'colors',
+            'widget': 'Combobox',
+            'default': 'White',
+            'options': get_sword_color_options(),
+            'tooltip':'''\
+                      'Random Choice': Choose a random
+                      color from this list of colors.
+                      'Completely Random': Choose a random
+                      color from any color the N64 can draw.
+                      ''',
+            'dependency': lambda settings: False if settings.rainbow_sword_trail else None,
+        }),
+    Setting_Info('sword_trail_color_outer2', str, 0, False,
+        {
+            'default': 'White',
+            'type': parse_custom_sword_color,
+            'help': '''\
+                    Choose the color for your sword trail when you swing. This controls the outer initial color. (default: %(default)s)
+                    Color:             Make your sword trail this color.
+                    Random Choice:     Choose a random color from this list of colors.
+                    Completely Random: Choose a random color from any color the N64 can draw.
+                    '''
+        },
+        {
+            'text': 'Sword Trail Outer Fade',
+            'group': 'colors',
+            'widget': 'Combobox',
+            'default': 'White',
+            'options': get_sword_color_options(),
+            'tooltip':'''\
+                      'Random Choice': Choose a random
+                      color from this list of colors.
+                      'Completely Random': Choose a random
+                      color from any color the N64 can draw.
+                      ''',
+            'dependency': lambda settings: False if settings.rainbow_sword_trail else None,
         }),
     Combobox(
             name           = 'sfx_navi_overworld',

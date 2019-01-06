@@ -123,13 +123,13 @@ def guiMain(settings=None):
     frames['logic_tab'] = ttk.Frame(notebook)
     frames['other_tab'] = ttk.Frame(notebook)
     frames['cosmetic_tab'] = ttk.Frame(notebook)
-    frames['cosmetic_tab_left'] = Frame(frames['cosmetic_tab'])
-    frames['cosmetic_tab_right'] = Frame(frames['cosmetic_tab'])
+    frames['audio_tab'] = ttk.Frame(notebook)
     notebook.add(frames['rom_tab'], text='ROM Options')
     notebook.add(frames['rules_tab'], text='Main Rules')
     notebook.add(frames['logic_tab'], text='Detailed Logic')
     notebook.add(frames['other_tab'], text='Other')
     notebook.add(frames['cosmetic_tab'], text='Cosmetic')
+    notebook.add(frames['audio_tab'], text='Audio')
 
     #######################
     # Randomizer controls #
@@ -144,23 +144,25 @@ def guiMain(settings=None):
     ############
 
     #Rules Tab
-    frames['open']        = LabelFrame(frames['rules_tab'],          text='Open',              labelanchor=NW)
-    frames['world']       = LabelFrame(frames['rules_tab'],          text='World',             labelanchor=NW)
-    frames['shuffle']     = LabelFrame(frames['rules_tab'],          text='Shuffle',           labelanchor=NW)
+    frames['open']         = LabelFrame(frames['rules_tab'],          text='Open',              labelanchor=NW)
+    frames['world']        = LabelFrame(frames['rules_tab'],          text='World',             labelanchor=NW)
+    frames['shuffle']      = LabelFrame(frames['rules_tab'],          text='Shuffle',           labelanchor=NW)
 
     # Logic tab
-    frames['checks']      = LabelFrame(frames['logic_tab'],          text='Adult Trade Sequence', labelanchor=NW)
-    frames['tricks']      = LabelFrame(frames['logic_tab'],          text='Lens of Truth',   labelanchor=NW)
+    frames['checks']       = LabelFrame(frames['logic_tab'],          text='Adult Trade Sequence', labelanchor=NW)
+    frames['tricks']       = LabelFrame(frames['logic_tab'],          text='Lens of Truth',   labelanchor=NW)
 
     #Other Tab
-    frames['convenience'] = LabelFrame(frames['other_tab'],          text='Timesavers',        labelanchor=NW)
-    frames['other']       = LabelFrame(frames['other_tab'],          text='Misc',              labelanchor=NW)
+    frames['convenience']  = LabelFrame(frames['other_tab'],          text='Timesavers',        labelanchor=NW)
+    frames['other']        = LabelFrame(frames['other_tab'],          text='Misc',              labelanchor=NW)
 
     #Cosmetic tab
-    frames['cosmetic']    = LabelFrame(frames['cosmetic_tab'],       text='General',           labelanchor=NW)
-    frames['colors']      = LabelFrame(frames['cosmetic_tab_right'], text='Colors',            labelanchor=NW)
-    frames['sfx']         = LabelFrame(frames['cosmetic_tab_left'],  text='SFX',               labelanchor=NW)
+    frames['cosmetic']     = LabelFrame(frames['cosmetic_tab'],        text='Misc',             labelanchor=NW)
+    frames['colors']       = LabelFrame(frames['cosmetic_tab'],        text='Colors',           labelanchor=NW)
 
+    # Audio Tab
+    frames['audio']        = LabelFrame(frames['audio_tab'],           text='Misc',             labelanchor=NW)
+    frames['sfx']          = LabelFrame(frames['audio_tab'],           text='SFX',              labelanchor=NW)
 
     # Shared
     def toggle_widget(widget, enabled):
@@ -420,16 +422,13 @@ def guiMain(settings=None):
     frames['convenience'].pack(fill=BOTH, expand=True, anchor=N, side=LEFT, pady=(5,1))
     frames['other'].pack(      fill=BOTH, expand=True, anchor=N, side=LEFT, pady=(5,1))
 
-    # Cosmetics tab
-    frames['cosmetic'].pack(          fill=BOTH, expand=True, anchor=W, side=TOP)
-    frames['cosmetic_tab_left'].pack( fill=BOTH, expand=True, anchor=W, side=LEFT)
-    frames['cosmetic_tab_right'].pack(fill=BOTH, expand=True, anchor=W, side=RIGHT)
+    # Cosmetic Tab
+    frames['colors'].pack(fill=BOTH, expand=True, anchor=W, side=LEFT, pady=(5,1))
+    frames['cosmetic'].pack(fill=BOTH, expand=True, anchor=W, side=RIGHT, pady=(5,1))
 
-    # Cosmetics tab - Left Side
-    frames['sfx'].pack(fill=BOTH, expand=True, anchor=W, side=TOP, pady=(5,1))
-
-    # Cosmetics tab - Right Side
-    frames['colors'].pack(fill=BOTH, expand=True, anchor=W, side=TOP, pady=(5,1))
+    # Audio Tab
+    frames['sfx'].pack(fill=BOTH, expand=True, anchor=W, side=LEFT, pady=(5,1))
+    frames['audio'].pack(fill=BOTH, expand=True, anchor=W, side=RIGHT, pady=(5,1))
 
     notebook.pack(fill=BOTH, expand=True, padx=5, pady=5)
 
