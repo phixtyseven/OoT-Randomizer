@@ -193,7 +193,9 @@ def patch_cosmetics(settings, rom):
     ]
     sword_color_list = get_sword_colors()
     
+    symbol = rom.sym('RAINBOW_SWORD_ENABLED')
     if not settings.rainbow_sword_trail:
+        rom.write_int32(symbol, 0x00000000)
         for index, item in enumerate(sword_trails):
             sword_trail, sword_trail_option, sword_trail_address, transparency = item
             # handle random
@@ -223,7 +225,6 @@ def patch_cosmetics(settings, rom):
                                      0x00, 0x00, 0x00, 0xB0,
                                      0x00, 0x00, 0x00, 0x20,
                                      0x00, 0x00, 0x00, 0x10])
-        symbol = rom.sym('RAINBOW_SWORD_ENABLED')
         rom.write_int32(symbol, 0x00000001)
     rom.write_byte(0x00BEFF8C, settings.sword_trail_duration)
     # Configurable Sound Effects
