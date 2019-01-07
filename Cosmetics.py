@@ -227,6 +227,7 @@ def patch_cosmetics(settings, rom):
                                      0x00, 0x00, 0x00, 0x10])
         rom.write_int32(symbol, 0x00000001)
     rom.write_byte(0x00BEFF8C, settings.sword_trail_duration)
+
     # Configurable Sound Effects
     sfx_config = [
           (settings.sfx_navi_overworld, sfx.SoundHooks.NAVI_OVERWORLD),

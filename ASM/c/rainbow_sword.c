@@ -21,13 +21,13 @@ typedef struct
 
 colorRGB_t colors[] =
 {
-    { 0xE0, 0x10, 0x10 }, //red
-    { 0xE0, 0xE0, 0x10 }, //yellow
-    { 0x10, 0xE0, 0x10 }, //green
-    { 0x10, 0xE0, 0xE0 }, //cyan
-    { 0x10, 0x10, 0xE0 }, //blue
-    { 0xE0, 0x10, 0xE0 }, //purple
-    { 0xE0, 0x10, 0x10 }, //red
+    { 0xE0, 0x10, 0x10 }, // Red
+    { 0xE0, 0x90, 0x10 }, // Orange
+    { 0xE0, 0xE0, 0x10 }, // Yellow
+    { 0x10, 0xE0, 0x10 }, // Green
+    { 0x10, 0xE0, 0xE0 }, // Cyan
+    { 0x10, 0x10, 0xE0 }, // Blue
+    { 0xE0, 0x10, 0xE0 }, // Purple
 };
 
 colorRGB_t set_sword_trail_color(int index, int f)
@@ -54,17 +54,25 @@ colorRGB_t set_sword_trail_color(int index, int f)
 
 void update_color()
 {
-    if(RAINBOW_SWORD_ENABLED) {
+    if (RAINBOW_SWORD_ENABLED) {
         frames+=5;
         if (frames >= CYCLE_FRAMES * 6)
             frames = 0;
             
         int index = frames / CYCLE_FRAMES;
         int f = frames % CYCLE_FRAMES;
-    
-        colorRGB_t color = set_sword_trail_color(index, f);
         uint8_t *sword_trail = (uint8_t*)0x80115DCE;
-        for (int i = 0; i < 16 ; i+=4) {
+    
+		// outer
+        colorRGB_t color = set_sword_trail_color(index, f);
+        for (int i = 0; i < 16 ; i+=8) {
+            sword_trail[i] = color.r;
+            sword_trail[i + 1] = color.g;
+            sword_trail[i + 2] = color.b;
+        }
+		// inner
+        color = set_sword_trail_color((index + 1) % 6, f);
+        for (int i = 4; i < 16 ; i+=8) {
             sword_trail[i] = color.r;
             sword_trail[i + 1] = color.g;
             sword_trail[i + 2] = color.b;
