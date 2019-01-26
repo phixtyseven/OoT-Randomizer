@@ -1042,6 +1042,7 @@ skip_GS_BGS_text:
 
 .org 0xCC453C
     .word 0x00000806
+
 ;==================================================================================================
 ; Drawbridge change
 ;==================================================================================================
@@ -1049,3 +1050,53 @@ skip_GS_BGS_text:
 ; Replaces: SH  T9, 0x00B4 (S0)
 .org 0xC82550
    nop
+
+;==================================================================================================
+; HUD Colors
+;==================================================================================================
+
+;Replaces: addiu t4, r0, 0x00FF
+;...
+.org 0xADA974 ; 0x80064A14
+    lw t4, CFG_HEART_RED
+    sh    t4, 0x0202 (v0); store beating_heart_r
+    sh    t4, 0x020E (v0); store static_heart_r
+    sra   t4, t4, 0x0002;
+    sh    t4, 0x0208 (v0); store beating_outline_r
+    sh    t4, 0x021A (v0); store static_outline_r
+    lw t4, CFG_HEART_GREEN
+    sh    t4, 0x0204 (v0); store beating_heart_g
+    sh    t4, 0x0212 (v0); store static_heart_g
+    sra   t4, t4, 0x0002;
+    sh    t4, 0x020A (v0); store beating_outline_g
+    sh    t4, 0x021E (v0); store static_outline_g
+    lw t4, CFG_HEART_BLUE
+    sh    t4, 0x0206 (v0); store beating_heart_b
+    sh    t4, 0x0216 (v0); store static_heart_b
+    sra   t4, t4, 0x0002;
+    sh    t4, 0x020C (v0); store beating_outline_b
+    sh    t4, 0x0222 (v0); store static_outline_b
+    nop
+
+.org 0xADAA18 ; 0x80064AB8
+    nop
+
+.org 0xADAA48 ; 0x80064AE8
+    nop
+
+.org 0xADAA60 ; 0x80064B00
+    nop
+
+;    Some notes or something (I don't remember)
+;    sh    t4, 0x0202 (v0); store beating_heart_r
+;    sh    t4, 0x0204 (v0); store beating_heart_g
+;    sh    t4, 0x0206 (v0); store beating_heart_b
+;    sh    t4, 0x0208 (v0); store beating_outline_r
+;    sh    t4, 0x020A (v0); store beating_outline_g
+;    sh    t4, 0x020C (v0); store beating_outline_b
+;    sh    t4, 0x020E (v0); store normal_heart_r
+;    sh    t4, 0x0212 (v0); store normal_heart_g
+;    sh    t4, 0x0216 (v0); store normal_heart_b
+;    sh    t4, 0x021A (v0); store normal_outline_r
+;    sh    t4, 0x021E (v0); store normal_outline_g
+;    sh    t4, 0x0222 (v0); store normal_outline_b
